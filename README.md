@@ -50,6 +50,15 @@ python dsp_darkfog_converter.py "存档.dsv" -c -d high
 python dsp_darkfog_converter.py "存档.dsv" -c -o "新存档.dsv"
 ```
 
+### 自定义详细设置
+```bash
+# 使用预设并覆盖部分设置
+python dsp_darkfog_converter.py "存档.dsv" -c -d normal --max-density 2.0
+
+# 完全自定义
+python dsp_darkfog_converter.py "存档.dsv" -c --aggressiveness 3 --initial-level 2 --max-density 1.5
+```
+
 ## 难度等级
 
 | 等级 | 参数 | 说明 |
@@ -71,10 +80,24 @@ Windows 默认存档路径:
 |------|------|
 | `save_file` | 存档文件路径 |
 | `--convert, -c` | 转换为黑雾模式 |
-| `--difficulty, -d` | 难度等级: low/normal/high |
+| `--difficulty, -d` | 难度预设: low/normal/high |
 | `--output, -o` | 输出文件路径 |
 | `--no-backup` | 不创建备份 |
 | `--version, -v` | 显示版本号 |
+
+### 可选详细设置
+
+| 参数 | 说明 | 范围 |
+|------|------|------|
+| `--aggressiveness` | 攻击性 | 0=被动, 2=普通, 4=狂暴 |
+| `--initial-level` | 初始等级 | 0-10 |
+| `--initial-growth` | 初始成长 | 0.25-3 |
+| `--initial-colonize` | 初始殖民 | 0.5-3 |
+| `--max-density` | 最大密度 | 0.5-3 |
+| `--growth-speed` | 成长速度 | 0.25-3 |
+| `--power-threat` | 电力威胁 | 0.01-10 |
+| `--battle-threat` | 战斗威胁 | 0.01-10 |
+| `--battle-exp` | 战斗经验 | 0.01-10 |
 
 ## 工作原理
 

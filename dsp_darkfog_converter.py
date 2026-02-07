@@ -459,7 +459,28 @@ def main():
     parser.add_argument('--difficulty', '-d', type=str,
                         choices=['low', 'normal', 'high'],
                         default='normal',
-                        help='黑雾难度: low/normal/high (默认: normal)')
+                        help='黑雾难度预设: low/normal/high (默认: normal)')
+
+    # 可选的详细设置
+    parser.add_argument('--aggressiveness', type=float,
+                        help='攻击性 (0=被动, 2=普通, 4=狂暴)')
+    parser.add_argument('--initial-level', type=float,
+                        help='初始等级 (0-10)')
+    parser.add_argument('--initial-growth', type=float,
+                        help='初始成长 (0.25-3)')
+    parser.add_argument('--initial-colonize', type=float,
+                        help='初始殖民 (0.5-3)')
+    parser.add_argument('--max-density', type=float,
+                        help='最大密度 (0.5-3)')
+    parser.add_argument('--growth-speed', type=float,
+                        help='成长速度 (0.25-3)')
+    parser.add_argument('--power-threat', type=float,
+                        help='电力威胁 (0.01-10)')
+    parser.add_argument('--battle-threat', type=float,
+                        help='战斗威胁 (0.01-10)')
+    parser.add_argument('--battle-exp', type=float,
+                        help='战斗经验 (0.01-10)')
+
     parser.add_argument('--output', '-o', type=str,
                         help='输出文件路径 (默认覆盖原文件)')
     parser.add_argument('--no-backup', action='store_true',
@@ -505,8 +526,28 @@ def main():
         if not args.no_backup:
             analyzer.create_backup()
 
-        # 获取战斗设置
+        # 获取战斗设置（先从预设开始）
         combat_settings = get_combat_settings(args.difficulty)
+
+        # 应用用户自定义设置（覆盖预设）
+        if args.aggressiveness is not None:
+            combat_settings['aggressiveness'] = args.aggressiveness
+        if args.initial_level is not None:
+            combat_settings['initial_level'] = args.initial_level
+        if args.initial_growth is not None:
+            combat_settings['initial_growth'] = args.initial_growth
+        if args.initial_colonize is not None:
+            combat_settings['initial_colonize'] = args.initial_colonize
+        if args.max_density is not None:
+            combat_settings['max_density'] = args.max_density
+        if args.growth_speed is not None:
+            combat_settings['growth_speed'] = args.growth_speed
+        if args.power_threat is not None:
+            combat_settings['power_threat'] = args.power_threat
+        if args.battle_threat is not None:
+            combat_settings['battle_threat'] = args.battle_threat
+        if args.battle_exp is not None:
+            combat_settings['battle_exp'] = args.battle_exp
 
         # 执行转换
         if analyzer.convert_to_combat(combat_settings):
